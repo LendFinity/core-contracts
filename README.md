@@ -108,98 +108,80 @@ npm run test
 
 ## Adresses
 
-### Deployments
-
 ```bash
 ┌─────────────────────────────────────────┬──────────────────────────────────────────────┐
 │ (index)                                 │ address                                      │
 ├─────────────────────────────────────────┼──────────────────────────────────────────────┤
-│ PoolAddressesProviderRegistry           │ '0x5A61c51C6745b3F509f4a1BF54BFD04e04aF430a' │
-│ SupplyLogic                             │ '0x832092FDF1D32A3A1b196270590fB0E25DF129FF' │
-│ BorrowLogic                             │ '0xe3e4631D734e4b3F900AfcC396440641Ed0df339' │
-│ LiquidationLogic                        │ '0x8729c0238b265BaCF6fE397E8309897BB5c40473' │
-│ EModeLogic                              │ '0xDf795df2e0ad240a82d773DA01a812B96345F9C5' │
-│ BridgeLogic                             │ '0x0Ff833129533546D96A5847C22b57AACccD00FD5' │
-│ ConfiguratorLogic                       │ '0x26320DE63415e5AAf2BA617D97C39444eDb6F741' │
-│ FlashLoanLogic                          │ '0x2ac430E52F47420A00984E11Ef0DDba80652419a' │
-│ PoolLogic                               │ '0x2550d6424b46f78F4E31F1CCf88Da26dda7826C6' │
-│ TreasuryProxy                           │ '0xDb731EaaFA0FFA7854A24C2379585a85D768Ed5C' │
-│ Treasury-Controller                     │ '0x335796f7A0F72368D1588839e38f163d90C92C80' │
-│ Treasury-Implementation                 │ '0xa86582Ad5E80abc19F95f8A9Fb3905Cda0dAbd59' │
-│ Faucet-Aave                             │ '0xA002B84Ca3c9e8748209F286Ecf99300CA50161A' │
-│ PoolAddressesProvider-Aave              │ '0xc565EB7363769f8ffAe0005285ccD854c631A0a0' │
-│ PoolDataProvider-Aave                   │ '0xdA796117bF6905DD8DB2fF1ab4397f6d2c4ADda3' │
-│ DAI-TestnetPriceAggregator-Aave         │ '0x88777418972fB3F58489303d763d4DaF398A6527' │
-│ LINK-TestnetPriceAggregator-Aave        │ '0x4728aF32823cf144586DaB95632156cC81BB0203' │
-│ USDC-TestnetPriceAggregator-Aave        │ '0x37d0eD258f37a966f33b75b5AE7486917a0ae614' │
-│ WBTC-TestnetPriceAggregator-Aave        │ '0x294c69bD8415219b41B68a2f065DeABB950dd489' │
-│ WETH-TestnetPriceAggregator-Aave        │ '0x48288D0e3079A03f6EC1846554CFc58C2696Aaee' │
-│ USDT-TestnetPriceAggregator-Aave        │ '0x74Ce26A2e4c1368C48A0157CE762944d282896Db' │
-│ AAVE-TestnetPriceAggregator-Aave        │ '0x7c77704007C9996Ee591C516f7319828BA49d91E' │
-│ EURS-TestnetPriceAggregator-Aave        │ '0x676F5F71DAE1C83Dc31775E4c61212bC9e799d9C' │
-│ Pool-Implementation                     │ '0x081F08945fd17C5470f7bCee23FB57aB1099428E' │
-│ PoolConfigurator-Implementation         │ '0x5EdB3Ff1EA450d1FF6d614F24f5C760761F7f688' │
-│ ReservesSetupHelper                     │ '0x98F74b7C96497070ba5052E02832EF9892962e62' │
-│ ACLManager-Aave                         │ '0xF47e3B0A1952A81F1afc41172762CB7CE8700133' │
-│ AaveOracle-Aave                         │ '0xD6b8Eb34413f07a1a67A469345cFEa6633efd58d' │
-│ Pool-Proxy-Aave                         │ '0xC898bbd6B62e871Ca3Ab593A7fb92822fb65e1aF' │
-│ PoolConfigurator-Proxy-Aave             │ '0x6AF8E91FC971D5c061b6D6edfa43E07c9c481873' │
-│ EmissionManager                         │ '0x934A389CaBFB84cdB3f0260B2a4FD575b8B345A3' │
-│ IncentivesV2-Implementation             │ '0xc91B651f770ed996a223a16dA9CCD6f7Df56C987' │
-│ IncentivesProxy                         │ '0xcFd23a2044E8475C9c9166B47b3ba72F3690A08E' │
-│ PullRewardsTransferStrategy             │ '0x10d16E2A026C4b5264A2aAC51cA65749cDf2037E' │
-│ AToken-Aave                             │ '0x4B7099FD879435a087C364aD2f9E7B3f94d20bBe' │
-│ DelegationAwareAToken-Aave              │ '0x98721EFD3D09A7Ae662C4D63156286DF673FC50B' │
-│ StableDebtToken-Aave                    │ '0x240A60DC5e0B9013Cb8CF39aa6f9dDd8f25E40D2' │
-│ VariableDebtToken-Aave                  │ '0xb69FC79100eDd058f9c96c0a13C80124aC1a7D77' │
-│ ReserveStrategy-rateStrategyVolatileOne │ '0x757Fd23a0fDF9F9d2786f62f96f02Db4D096d10A' │
-│ ReserveStrategy-rateStrategyStableOne   │ '0x7930AC7ddD1e35fD4b25230121A9C45923894e67' │
-│ ReserveStrategy-rateStrategyStableTwo   │ '0x4a680B00eEacbcCA480eB9aB57161A7B08A8F0Ba' │
-│ DAI-AToken-Aave                         │ '0x09ceEBBc3B3674198c066e4cbF7B6988DF1C8317' │
-│ DAI-VariableDebtToken-Aave              │ '0x0CfEb3BDBA8b4Ec39B80169f44bF65E30ee20B47' │
-│ DAI-StableDebtToken-Aave                │ '0xb8ECd991e7445355FCA3a97787E6200cF134c007' │
-│ LINK-AToken-Aave                        │ '0x97f2faE1B8e180cb3E249a76ECb66F3C42567aCe' │
-│ LINK-VariableDebtToken-Aave             │ '0xbA90B51dA769d46bb7394084109889C8E0061769' │
-│ LINK-StableDebtToken-Aave               │ '0x2A4d53F4f5E50ab59E7f1e3E2A2082e3C1c95e8d' │
-│ USDC-AToken-Aave                        │ '0x72f8Bf120aB1982119b7f6542756dd21ac552773' │
-│ USDC-VariableDebtToken-Aave             │ '0xc9407Cc32DF0666d671aC94a0A6Ac337391E042E' │
-│ USDC-StableDebtToken-Aave               │ '0x982226633315905D06c77a7306b8D860cBb1EAD5' │
-│ WBTC-AToken-Aave                        │ '0x5d6915cBB8973f339bdFd87C2A9759f99F212408' │
-│ WBTC-VariableDebtToken-Aave             │ '0xfa436251cC1484bFB6e6A36E435383873227e5fc' │
-│ WBTC-StableDebtToken-Aave               │ '0x5CD0a3E28F25CFCc0F322D5A36030f832BCC23d5' │
-│ WETH-AToken-Aave                        │ '0x261c6766844C31E602c183827ee425361eA76e4b' │
-│ WETH-VariableDebtToken-Aave             │ '0x13C0895577aca4ac519232d1609b7Fe96F909f5f' │
-│ WETH-StableDebtToken-Aave               │ '0xE5EFA7571116F75CCd2ce494B01Cb952Fa1b59f1' │
-│ USDT-AToken-Aave                        │ '0x63d4Ca3767eD5ce32e5081389B875846EF859335' │
-│ USDT-VariableDebtToken-Aave             │ '0x6f0b8815710C0c233De30018Cf88741d625190da' │
-│ USDT-StableDebtToken-Aave               │ '0x7deD5cE031C3c6026c7d8C07438c92765302c3b0' │
-│ AAVE-AToken-Aave                        │ '0x40d2e0911Cb1799eaB65189e934ea2cEd0FaFCA3' │
-│ AAVE-VariableDebtToken-Aave             │ '0xcf71C876f4da42cb5793Dd2a449a5405A1454243' │
-│ AAVE-StableDebtToken-Aave               │ '0x5ce0c570F363eB534A9177F4b49A1a0a9b7DcE68' │
-│ EURS-AToken-Aave                        │ '0x58cF7330cb4Dd3d509cEd5Bf0f5a35457E4Ff833' │
-│ EURS-VariableDebtToken-Aave             │ '0xA8814BD5b419c1bFA1d88e70b4eC0d8412750aA2' │
-│ EURS-StableDebtToken-Aave               │ '0x6e894F9C5EA573cD7439Df1D8FEf39b23cE90257' │
-│ MockFlashLoanReceiver                   │ '0x76C9284988B979f750BC504173ADc08E00c04398' │
-│ WrappedTokenGatewayV3                   │ '0x2F94C3189edA0e357B23048aEc736F323Ac431f6' │
-│ WalletBalanceProvider                   │ '0x9118EA4a52C6c7873729c8d8702cCd85E573f9E9' │
-│ UiIncentiveDataProviderV3               │ '0x1A223F93131cD7d898c28Ee0B905C39Db474FA08' │
-│ UiPoolDataProviderV3                    │ '0x77e6Bd5c1988d8d766698F9CeEa5C24559b999f8' │
+│ ACLManager-Bitfinity                    │ '0x70F804060040bAb7E443b0F4334d356B7a6D4bAc' │
+│ AToken-Bitfinity                        │ '0x26956F14dd56483e358C237fBF7a1729254b648D' │
+│ AaveOracle-Bitfinity                    │ '0x14fB3B15bc6046aa94A704EC86Bf795D16d05424' │
+│ BorrowLogic                             │ '0xFb3A7D4cdA276f3Ed98E4ACA2D6318BCd9751859' │
+│ BridgeLogic                             │ '0x6d824682aA66da4e6738c6f3e16cC15fe9ce6F79' │
+│ CAL-TestnetPriceAggregator-Bitfinity    │ '0x45D97250E4F261c4116b2ebDBA1b963e55B068d3' │
+│ CHAP-TestnetPriceAggregator-Bitfinity   │ '0x6736422d082B6f12de3cCBE0D749CA2FF0Ea3964' │
+│ COD-TestnetPriceAggregator-Bitfinity    │ '0xa10f1134b2E1Cdb364C77A172458b8AADD2f7FB5' │
+│ CVA-TestnetPriceAggregator-Bitfinity    │ '0x3912aD5b13bdC3966c6d7552612Bbec462bC68c4' │
+│ CYN-TestnetPriceAggregator-Bitfinity    │ '0x8be34D7830d446747B95Aa3ace0eaA4FF19b2007' │
+│ ConfiguratorLogic                       │ '0x81D0043Fa848D07A36899388E46765aeA0e11a6b' │
+│ DelegationAwareAToken-Bitfinity         │ '0x7Df54861967d020734Bcc3a115182E6e3E13316A' │
+│ EModeLogic                              │ '0xCDa53a4bCEefbB873581d2206316a439a7498172' │
+│ EmissionManager                         │ '0x1adc67Ca1ddb67A43772a29f79d58394A125C1b3' │
+│ FNS-TestnetPriceAggregator-Bitfinity    │ '0xB56Ab229bD4d9459e61BC7Bb34E394Ed6c1a8e39' │
+│ FlashLoanLogic                          │ '0xc9fb11FEEbf439cEb7E04D94FDd4A0314F01c597' │
+│ INT-TestnetPriceAggregator-Bitfinity    │ '0x8484C6b4dEa25cc60c5d8bB0477af74Ba9C7eb64' │
+│ IncentivesProxy                         │ '0x393ceb0230827066485267508A21Bf4A5f83C685' │
+│ IncentivesV2-Implementation             │ '0x18a0503B232224B2f8954ADB2391B623Bc6A8960' │
+│ LiquidationLogic                        │ '0xe14EbF1e8e8c39C1cf075fe1582f54392C97d8FE' │
+│ Pool-Implementation                     │ '0x36A7f9ca3EBD83E00c1bca3A1db378bcF039Bf85' │
+│ Pool-Proxy-Bitfinity                    │ '0xA7ed667bC90Dec516292A457C8387D336Cf68c07' │
+│ PoolAddressesProvider-Bitfinity         │ '0x39833d01a18ebDB9f389F550182913ed884d44a3' │
+│ PoolAddressesProviderRegistry           │ '0xd3aAA70197b22116c6732a964edC09C853AaC941' │
+│ PoolConfigurator-Implementation         │ '0xA4e9C96b5FfA721223a3f360b9d4d25613c37Fc5' │
+│ PoolConfigurator-Proxy-Bitfinity        │ '0x1F5030Be76606AC5649217Fe085fF71Ad410069f' │
+│ PoolDataProvider-Bitfinity              │ '0xE076341997771AB62fe184d1101BCd78d18053e2' │
+│ PoolLogic                               │ '0x406e5D7dDaA4029eB8B957aD7677c63e15c28AC7' │
+│ ReserveStrategy-rateStrategyStableOne   │ '0x492f33E4701D9bd42a133c1b5AB1e4ac8333c590' │
+│ ReserveStrategy-rateStrategyStableTwo   │ '0x867e1Ccb964654A1074627b0C6557b0ccEb869C4' │
+│ ReserveStrategy-rateStrategyVolatileOne │ '0xe7fA8a2D1DD0Bd3F766e04ccFC50061891A4641e' │
+│ ReservesSetupHelper                     │ '0xFae8bf5E0bCBdcc44f3E13966C8c3F16917463bE' │
+│ StableDebtToken-Bitfinity               │ '0xBEC054144d241EE23834D352E3a2033fC9092e2a' │
+│ SupplyLogic                             │ '0xdB52E4853b6A40D2972E6797E0BDBDb3eB761966' │
+│ TUSDT-TestnetPriceAggregator-Bitfinity  │ '0xB49BafEc7095d2d337A9e7DaaAE2DAA0F73d5b5A' │
+│ Treasury-Controller                     │ '0x1EC66e52D13c18809F023948f1ae053025D2c969' │
+│ Treasury-Implementation                 │ '0x4417E9B86Be5d09331eF8B5a98Af4589228F476E' │
+│ TreasuryProxy                           │ '0x2EeA9517B018B2f63072a9729ceC3EE524809460' │
+│ VariableDebtToken-Bitfinity             │ '0x899AA352C85DBb7C579e6DfE56f875B42bfe2C36' │
+│ WBFT-TestnetPriceAggregator-Bitfinity   │ '0x45d736c32e64AC430c091b419B83E40F14F70a80' │
+│ WBFT-AToken-Bitfinity                   │ '0x090827ea2AA15696681d6095ef5eD330E3b0E743' │
+│ WBFT-VariableDebtToken-Bitfinity        │ '0x995E5E6ff27D44d69536321e961A44A43be71191' │
+│ WBFT-StableDebtToken-Bitfinity          │ '0xFBc30039C2D1143e46b3E446f580CF67828183e9' │
+│ CHAP-AToken-Bitfinity                   │ '0xa7647cD01482492017c6Bdbd34f764C871C8f01B' │
+│ CHAP-VariableDebtToken-Bitfinity        │ '0xe3718389e4e8137c0D288e84D5fbcBC4Ed621dF0' │
+│ CHAP-StableDebtToken-Bitfinity          │ '0x2b204Dab8833C235e3738D427b8C8c0f102E6117' │
+│ INT-AToken-Bitfinity                    │ '0xc57C1Eeb56BcAb0Cc9019434E87cc8fD461d2B23' │
+│ INT-VariableDebtToken-Bitfinity         │ '0x654F1962E870dDca093C7C46E5F6e4264ABFf372' │
+│ INT-StableDebtToken-Bitfinity           │ '0xA2E663f976bd7aFbD4F497554675771cBf487DA9' │
+│ COD-AToken-Bitfinity                    │ '0xfC0058066F9C89d48eF5985D0913ED8BB442DDe8' │
+│ COD-VariableDebtToken-Bitfinity         │ '0xD55A5c7fF584B9340AB24df1E74C72de94621Aa6' │
+│ COD-StableDebtToken-Bitfinity           │ '0xF082dDD5cc5D0a9Cb5CadfeF39e54B976F64B289' │
+│ CVA-AToken-Bitfinity                    │ '0x92ef6b415Bc33bb3896984B7d870DE705D61e2ce' │
+│ CVA-VariableDebtToken-Bitfinity         │ '0x5328e7abAc3AF5FB40b8D2EAF05F9D654da00432' │
+│ CVA-StableDebtToken-Bitfinity           │ '0x1806A589DBFfF506F8FF22Ba0d0e7Af12313641E' │
+│ CYN-AToken-Bitfinity                    │ '0xCaC121dd65ed6C4Fe5f204E11f389d9171cEDAfE' │
+│ CYN-VariableDebtToken-Bitfinity         │ '0x745183796f56caF9563Df2e7E5DC20767C93e29A' │
+│ CYN-StableDebtToken-Bitfinity           │ '0x266A4f1Bd1Da55c00FD23d9C0B695fCdF18446eD' │
+│ CAL-AToken-Bitfinity                    │ '0x67aaDE9888722441AC589b0dfF19EDF838B3C357' │
+│ CAL-VariableDebtToken-Bitfinity         │ '0x0066286aE9F1B2C02F4E3b79A8cC4D10bf7FC56d' │
+│ CAL-StableDebtToken-Bitfinity           │ '0xE79d45c9ecE8e6F7a3C85245D74ab762132678b6' │
+│ TUSDT-AToken-Bitfinity                  │ '0x4bcF8C9C372159c28FA005895Fe22D6D67341416' │
+│ TUSDT-VariableDebtToken-Bitfinity       │ '0x4b46Eed3944278414ABf9dB60a2B57f75C29B4d2' │
+│ TUSDT-StableDebtToken-Bitfinity         │ '0xF3B7e372d811a473BF86814285Be31Fc33707CFC' │
+│ FNS-AToken-Bitfinity                    │ '0xf43181E138D142505330d379E0163CA9d8C5358f' │
+│ FNS-VariableDebtToken-Bitfinity         │ '0x6Ec82F91e7589A73cdcd7f646A0C0fb13b3d4a41' │
+│ FNS-StableDebtToken-Bitfinity           │ '0x7D1Dd1daCD45AE2d0130DE0D71C4BF6895d80ff1' │
+│ WrappedTokenGatewayV3                   │ '0x93691c0Cb6F6bb785Ec2405E98aC7B4A2BcF752A' │
+│ WalletBalanceProvider                   │ '0x1a363a3e66b3fcF7Ae8d10222620a070D751e38b' │
+│ UiIncentiveDataProviderV3               │ '0x4f278E2Ec87e266E90FAeb5595212EadEaC45e1D' │
+│ UiPoolDataProviderV3                    │ '0xE65FA718Fe0D7683eE6A4208D40e594F669A11A1' │
 └─────────────────────────────────────────┴──────────────────────────────────────────────┘
-```
-
-### Mintable Reserves and Rewards
-
-```bash
-┌────────────────────────────────┬──────────────────────────────────────────────┐
-│ (index)                        │ address                                      │
-├────────────────────────────────┼──────────────────────────────────────────────┤
-│ DAI-TestnetMintableERC20-Aave  │ '0x4633394E4Fd1175273845d7F0d6A5F613309d384' │
-│ LINK-TestnetMintableERC20-Aave │ '0x039d7496e432c6Aea4c24648a59318b3cbe09942' │
-│ USDC-TestnetMintableERC20-Aave │ '0xbF97DEfeb6a387215E3e67DFb988c675c9bb1a29' │
-│ WBTC-TestnetMintableERC20-Aave │ '0xaE7b7A1c6C4d859e19301ccAc2C6eD28A4C51288' │
-│ WETH-TestnetMintableERC20-Aave │ '0xe9CD84fe4ddfB0f016e3264791923902906753Bd' │
-│ USDT-TestnetMintableERC20-Aave │ '0x7722f5d7964a04672761cdfdC7c17B7Ac8f197b7' │
-│ AAVE-TestnetMintableERC20-Aave │ '0xeA2e668d430e5AA15babA2f5c5edfd4F9Ef6EB73' │
-│ EURS-TestnetMintableERC20-Aave │ '0xA7240bcff60Eef40F31B8eD5d921BaD6DB13B199' │
-└────────────────────────────────┴──────────────────────────────────────────────┘
 ```
