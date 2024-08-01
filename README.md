@@ -1,10 +1,10 @@
-# Bitfinity Protocol
+# Lendfinity Protocol
 
-This repository contains the smart contracts source code and markets configuration for Bitfinity V3. The repository uses Docker Compose and Hardhat as development environment for compilation, testing and deployment tasks.
+This repository contains the smart contracts source code and markets configuration for Lendfinity V3. The repository uses Docker Compose and Hardhat as development environment for compilation, testing and deployment tasks.
 
-## What is Bitfinity?
+## What is Lendfinity?
 
-Bitfinity is a decentralized non-custodial liquidity markets protocol where users can participate as suppliers or borrowers. Suppliers provide liquidity to the market to earn a passive income, while borrowers are able to borrow in an overcollateralized (perpetually) or undercollateralized (one-block liquidity) fashion.
+Lendfinity is a decentralized non-custodial liquidity markets protocol where users can participate as suppliers or borrowers. Suppliers provide liquidity to the market to earn a passive income, while borrowers are able to borrow in an overcollateralized (perpetually) or undercollateralized (one-block liquidity) fashion.
 
 ## Documentation
 
