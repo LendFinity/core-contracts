@@ -7,7 +7,6 @@ import {AToken} from './AToken.sol';
 
 /**
  * @title DelegationAwareAToken
- * @author Aave
  * @notice AToken enabled to delegate voting power of the underlying asset to a different address
  * @dev The underlying asset needs to be compatible with the COMP delegation interface
  */
@@ -33,5 +32,12 @@ contract DelegationAwareAToken is AToken {
   function delegateUnderlyingTo(address delegatee) external onlyPoolAdmin {
     IDelegationToken(_underlyingAsset).delegate(delegatee);
     emit DelegateUnderlyingTo(delegatee);
+  }
+
+  /**
+   * @dev Override _transfer method for index-based transfers
+   */
+  function _transfer(address from, address to, uint256 amount) internal override {
+    super._transfer(from, to, amount);
   }
 }

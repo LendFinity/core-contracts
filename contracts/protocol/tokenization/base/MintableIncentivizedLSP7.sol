@@ -3,14 +3,16 @@ pragma solidity ^0.8.10;
 
 import {IAaveIncentivesController} from '../../../interfaces/IAaveIncentivesController.sol';
 import {IPool} from '../../../interfaces/IPool.sol';
-import {IncentivizedERC20} from './IncentivizedERC20.sol';
+import {IncentivizedLSP7} from './IncentivizedLSP7.sol';
+
+import '@lukso/lsp7-contracts/contracts/ILSP7DigitalAsset.sol';
 
 /**
- * @title MintableIncentivizedERC20
- * @author Aave
- * @notice Implements mint and burn functions for IncentivizedERC20
+ * @title MintableIncentivizedLSP7
+ * @author Lendfinity (Modified from Aave)
+ * @notice Implements mint and burn functions for IncentivizedLSP7
  */
-abstract contract MintableIncentivizedERC20 is IncentivizedERC20 {
+contract MintableIncentivizedLSP7 is IncentivizedLSP7 {
   /**
    * @dev Constructor.
    * @param pool The reference to the main Pool contract
@@ -23,7 +25,7 @@ abstract contract MintableIncentivizedERC20 is IncentivizedERC20 {
     string memory name,
     string memory symbol,
     uint8 decimals
-  ) IncentivizedERC20(pool, name, symbol, decimals) {
+  ) IncentivizedLSP7(pool, name, symbol, decimals, false) {
     // Intentionally left blank
   }
 
@@ -43,6 +45,8 @@ abstract contract MintableIncentivizedERC20 is IncentivizedERC20 {
     if (address(incentivesControllerLocal) != address(0)) {
       incentivesControllerLocal.handleAction(account, oldTotalSupply, oldAccountBalance);
     }
+
+    emit Transfer(_msgSender(), address(0), account, amount, false, new bytes(0));
   }
 
   /**
@@ -62,5 +66,7 @@ abstract contract MintableIncentivizedERC20 is IncentivizedERC20 {
     if (address(incentivesControllerLocal) != address(0)) {
       incentivesControllerLocal.handleAction(account, oldTotalSupply, oldAccountBalance);
     }
+
+    emit Transfer(_msgSender(), account, address(0), amount, false, new bytes(0));
   }
 }

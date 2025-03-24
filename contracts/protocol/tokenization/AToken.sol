@@ -12,8 +12,10 @@ import {IAToken} from '../../interfaces/IAToken.sol';
 import {IAaveIncentivesController} from '../../interfaces/IAaveIncentivesController.sol';
 import {IInitializableAToken} from '../../interfaces/IInitializableAToken.sol';
 import {ScaledBalanceTokenBase} from './base/ScaledBalanceTokenBase.sol';
-import {IncentivizedERC20} from './base/IncentivizedERC20.sol';
+import {IncentivizedLSP7} from './base/IncentivizedLSP7.sol';
 import {EIP712Base} from './base/EIP712Base.sol';
+
+import '@lukso/lsp7-contracts/contracts/LSP7DigitalAsset.sol';
 
 /**
  * @title Aave ERC20 AToken
@@ -82,6 +84,52 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
     );
   }
 
+  // Implement transfer method required by IERC20 interface
+  function transfer(address to, uint256 amount) external virtual override returns (bool) {
+    _transfer(_msgSender(), to, amount, true, new bytes(0), new bytes(0));
+    return true;
+  }
+
+  // Implement transferFrom method required by IERC20 interface
+  function transferFrom(
+    address from,
+    address to,
+    uint256 amount
+  ) external virtual override returns (bool) {
+    // Using the LSP7 transferFrom pattern but adapting for IERC20 compatibility
+    super.transferFrom(from, to, amount, new bytes(0), new bytes(0));
+    return true;
+  }
+
+  // Implement approve method required by IERC20 interface
+  function approve(address spender, uint256 amount) external virtual override returns (bool) {
+    _approve(_msgSender(), spender, amount);
+    return true;
+  }
+
+  // Implement allowance method required by IERC20 interface
+  function allowance(
+    address owner,
+    address spender
+  ) external view virtual override returns (uint256) {
+    return authorizedAmountFor(spender, owner);
+  }
+
+  /**
+   * @notice Implementation of transfer method with LSP7 compatibility
+   * @param from The source address
+   * @param to The destination address
+   * @param amount The amount to transfer
+   */
+  function transfer(address from, address to, uint256 amount) public virtual {
+    _transfer(from, to, amount);
+  }
+
+  // Override _transfer method from ScaledBalanceTokenBase to ensure proper index handling
+  function _transfer(address from, address to, uint256 amount) internal virtual {
+    _transfer(_msgSender(), from, to, amount.toUint128(), new bytes(0), new bytes(0));
+  }
+
   /// @inheritdoc IAToken
   function mint(
     address caller,
@@ -121,18 +169,18 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
   ) external virtual override onlyPool {
     // Being a normal transfer, the Transfer() and BalanceTransfer() are emitted
     // so no need to emit a specific event here
-    _transfer(from, to, value, false);
+    _transfer(from, to, value, false, new bytes(0), new bytes(0));
   }
 
   /// @inheritdoc IERC20
   function balanceOf(
     address user
-  ) public view virtual override(IncentivizedERC20, IERC20) returns (uint256) {
+  ) public view virtual override(IncentivizedLSP7, IERC20) returns (uint256) {
     return super.balanceOf(user).rayMul(POOL.getReserveNormalizedIncome(_underlyingAsset));
   }
 
   /// @inheritdoc IERC20
-  function totalSupply() public view virtual override(IncentivizedERC20, IERC20) returns (uint256) {
+  function totalSupply() public view virtual override(IncentivizedLSP7, IERC20) returns (uint256) {
     uint256 currentSupplyScaled = super.totalSupply();
 
     if (currentSupplyScaled == 0) {
@@ -193,14 +241,35 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
   }
 
   /**
+   * @dev Approves `spender` to spend `value` tokens by caller
+   * @param owner The address of the owner
+   * @param spender The address of the spender
+   * @param value The amount to approve
+   */
+  function _approve(address owner, address spender, uint256 value) internal virtual {
+    // We can't use super.authorizeOperator here because the function signature doesn't match exactly
+    // Use IncentivizedLSP7's implementation directly
+    IncentivizedLSP7.authorizeOperator(spender, value, new bytes(0));
+  }
+
+  /**
    * @notice Transfers the aTokens between two users. Validates the transfer
    * (ie checks for valid HF after the transfer) if required
    * @param from The source address
    * @param to The destination address
    * @param amount The amount getting transferred
    * @param validate True if the transfer needs to be validated, false otherwise
+   * @param tokenHolderData Additional data for token holder
+   * @param operatorNotificationData Additional data for operators
    */
-  function _transfer(address from, address to, uint256 amount, bool validate) internal virtual {
+  function _transfer(
+    address from,
+    address to,
+    uint256 amount,
+    bool validate,
+    bytes memory tokenHolderData,
+    bytes memory operatorNotificationData
+  ) internal virtual {
     address underlyingAsset = _underlyingAsset;
 
     uint256 index = POOL.getReserveNormalizedIncome(underlyingAsset);
@@ -208,7 +277,14 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
     uint256 fromBalanceBefore = super.balanceOf(from).rayMul(index);
     uint256 toBalanceBefore = super.balanceOf(to).rayMul(index);
 
-    super._transfer(from, to, amount, index);
+    super._transfer(
+      _msgSender(),
+      from,
+      to,
+      amount.toUint128(),
+      tokenHolderData,
+      operatorNotificationData
+    );
 
     if (validate) {
       POOL.finalizeTransfer(underlyingAsset, from, to, amount, fromBalanceBefore, toBalanceBefore);
@@ -223,8 +299,8 @@ contract AToken is VersionedInitializable, ScaledBalanceTokenBase, EIP712Base, I
    * @param to The destination address
    * @param amount The amount getting transferred
    */
-  function _transfer(address from, address to, uint128 amount) internal virtual override {
-    _transfer(from, to, amount, true);
+  function _transfer(address from, address to, uint128 amount) internal virtual {
+    _transfer(from, to, amount, true, new bytes(0), new bytes(0));
   }
 
   /**

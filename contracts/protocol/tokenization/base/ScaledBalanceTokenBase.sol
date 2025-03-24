@@ -6,14 +6,15 @@ import {Errors} from '../../libraries/helpers/Errors.sol';
 import {WadRayMath} from '../../libraries/math/WadRayMath.sol';
 import {IPool} from '../../../interfaces/IPool.sol';
 import {IScaledBalanceToken} from '../../../interfaces/IScaledBalanceToken.sol';
-import {MintableIncentivizedERC20} from './MintableIncentivizedERC20.sol';
+import {MintableIncentivizedLSP7} from './MintableIncentivizedLSP7.sol';
+import {IncentivizedLSP7} from './IncentivizedLSP7.sol';
 
 /**
  * @title ScaledBalanceTokenBase
  * @author Aave
  * @notice Basic ERC20 implementation of scaled balance token
  */
-abstract contract ScaledBalanceTokenBase is MintableIncentivizedERC20, IScaledBalanceToken {
+contract ScaledBalanceTokenBase is MintableIncentivizedLSP7, IScaledBalanceToken {
   using WadRayMath for uint256;
   using SafeCast for uint256;
 
@@ -29,7 +30,7 @@ abstract contract ScaledBalanceTokenBase is MintableIncentivizedERC20, IScaledBa
     string memory name,
     string memory symbol,
     uint8 decimals
-  ) MintableIncentivizedERC20(pool, name, symbol, decimals) {
+  ) MintableIncentivizedLSP7(pool, name, symbol, decimals) {
     // Intentionally left blank
   }
 
@@ -81,7 +82,7 @@ abstract contract ScaledBalanceTokenBase is MintableIncentivizedERC20, IScaledBa
     _mint(onBehalfOf, amountScaled.toUint128());
 
     uint256 amountToMint = amount + balanceIncrease;
-    emit Transfer(address(0), onBehalfOf, amountToMint);
+    emit Transfer(caller, address(0), onBehalfOf, amountToMint, false, '');
     emit Mint(caller, onBehalfOf, amountToMint, balanceIncrease, index);
 
     return (scaledBalance == 0);
@@ -110,11 +111,11 @@ abstract contract ScaledBalanceTokenBase is MintableIncentivizedERC20, IScaledBa
 
     if (balanceIncrease > amount) {
       uint256 amountToMint = balanceIncrease - amount;
-      emit Transfer(address(0), user, amountToMint);
+      emit Transfer(msg.sender, address(0), user, amountToMint, false, '');
       emit Mint(user, user, amountToMint, balanceIncrease, index);
     } else {
       uint256 amountToBurn = amount - balanceIncrease;
-      emit Transfer(user, address(0), amountToBurn);
+      emit Transfer(msg.sender, user, address(0), amountToBurn, false, '');
       emit Burn(user, target, amountToBurn, balanceIncrease, index);
     }
   }
@@ -139,18 +140,18 @@ abstract contract ScaledBalanceTokenBase is MintableIncentivizedERC20, IScaledBa
     _userState[sender].additionalData = index.toUint128();
     _userState[recipient].additionalData = index.toUint128();
 
-    super._transfer(sender, recipient, amount.rayDiv(index).toUint128());
+    super._transfer(msg.sender, sender, recipient, amount.rayDiv(index).toUint128(), '', '');
 
     if (senderBalanceIncrease > 0) {
-      emit Transfer(address(0), sender, senderBalanceIncrease);
+      emit Transfer(msg.sender, address(0), sender, senderBalanceIncrease, false, '');
       emit Mint(_msgSender(), sender, senderBalanceIncrease, senderBalanceIncrease, index);
     }
 
     if (sender != recipient && recipientBalanceIncrease > 0) {
-      emit Transfer(address(0), recipient, recipientBalanceIncrease);
+      emit Transfer(msg.sender, address(0), recipient, recipientBalanceIncrease, false, '');
       emit Mint(_msgSender(), recipient, recipientBalanceIncrease, recipientBalanceIncrease, index);
     }
 
-    emit Transfer(sender, recipient, amount);
+    emit Transfer(msg.sender, sender, recipient, amount, false, '');
   }
 }

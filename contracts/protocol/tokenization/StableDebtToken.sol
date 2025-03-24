@@ -12,7 +12,7 @@ import {IStableDebtToken} from '../../interfaces/IStableDebtToken.sol';
 import {IPool} from '../../interfaces/IPool.sol';
 import {EIP712Base} from './base/EIP712Base.sol';
 import {DebtTokenBase} from './base/DebtTokenBase.sol';
-import {IncentivizedERC20} from './base/IncentivizedERC20.sol';
+import {IncentivizedLSP7} from './base/IncentivizedLSP7.sol';
 import {SafeCast} from '../../dependencies/openzeppelin/contracts/SafeCast.sol';
 
 /**
@@ -22,7 +22,7 @@ import {SafeCast} from '../../dependencies/openzeppelin/contracts/SafeCast.sol';
  * at stable rate mode
  * @dev Transfer and approve functionalities are disabled since its a non-transferable token
  */
-contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
+contract StableDebtToken is DebtTokenBase, IncentivizedLSP7, IStableDebtToken {
   using WadRayMath for uint256;
   using SafeCast for uint256;
 
@@ -42,7 +42,10 @@ contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
    */
   constructor(
     IPool pool
-  ) DebtTokenBase() IncentivizedERC20(pool, 'STABLE_DEBT_TOKEN_IMPL', 'STABLE_DEBT_TOKEN_IMPL', 0) {
+  )
+    DebtTokenBase()
+    IncentivizedLSP7(pool, 'STABLE_DEBT_TOKEN_IMPL', 'STABLE_DEBT_TOKEN_IMPL', 0, false)
+  {
     // Intentionally left blank
   }
 
@@ -97,7 +100,6 @@ contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
     return _userState[user].additionalData;
   }
 
-  /// @inheritdoc IERC20
   function balanceOf(address account) public view virtual override returns (uint256) {
     uint256 accountBalance = super.balanceOf(account);
     uint256 stableRate = _userState[account].additionalData;
@@ -159,7 +161,7 @@ contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
     uint256 amountToMint = amount + balanceIncrease;
     _mint(onBehalfOf, amountToMint, vars.previousSupply);
 
-    emit Transfer(address(0), onBehalfOf, amountToMint);
+    emit Transfer(msg.sender, address(0), onBehalfOf, amountToMint, false, '');
     emit Mint(
       user,
       onBehalfOf,
@@ -223,7 +225,7 @@ contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
     if (balanceIncrease > amount) {
       uint256 amountToMint = balanceIncrease - amount;
       _mint(from, amountToMint, previousSupply);
-      emit Transfer(address(0), from, amountToMint);
+      emit Transfer(msg.sender, address(0), from, amountToMint, false, '');
       emit Mint(
         from,
         from,
@@ -237,7 +239,7 @@ contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
     } else {
       uint256 amountToBurn = amount - balanceIncrease;
       _burn(from, amountToBurn, previousSupply);
-      emit Transfer(from, address(0), amountToBurn);
+      emit Transfer(msg.sender, from, address(0), amountToBurn, false, '');
       emit Burn(from, amountToBurn, currentBalance, balanceIncrease, nextAvgStableRate, nextSupply);
     }
 
@@ -281,7 +283,6 @@ contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
     return (_calcTotalSupply(avgRate), avgRate);
   }
 
-  /// @inheritdoc IERC20
   function totalSupply() public view virtual override returns (uint256) {
     return _calcTotalSupply(_avgStableRate);
   }
@@ -362,27 +363,87 @@ contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
    * @dev Being non transferrable, the debt token does not implement any of the
    * standard ERC20 functions for transfer and allowance.
    */
-  function transfer(address, uint256) external virtual override returns (bool) {
+  function transfer(address, uint256) external virtual returns (bool) {
     revert(Errors.OPERATION_NOT_SUPPORTED);
   }
 
-  function allowance(address, address) external view virtual override returns (uint256) {
+  function allowance(address, address) external view virtual returns (uint256) {
     revert(Errors.OPERATION_NOT_SUPPORTED);
   }
 
-  function approve(address, uint256) external virtual override returns (bool) {
+  function approve(address, uint256) external virtual returns (bool) {
     revert(Errors.OPERATION_NOT_SUPPORTED);
   }
 
-  function transferFrom(address, address, uint256) external virtual override returns (bool) {
+  function transferFrom(address, address, uint256) external virtual returns (bool) {
     revert(Errors.OPERATION_NOT_SUPPORTED);
   }
 
-  function increaseAllowance(address, uint256) external virtual override returns (bool) {
+  function increaseAllowance(address, uint256) external virtual returns (bool) {
     revert(Errors.OPERATION_NOT_SUPPORTED);
   }
 
-  function decreaseAllowance(address, uint256) external virtual override returns (bool) {
+  function decreaseAllowance(address, uint256) external virtual returns (bool) {
     revert(Errors.OPERATION_NOT_SUPPORTED);
+  }
+
+  /**
+   * @notice Transfers the underlying asset to a specified address.
+   * @dev Implements the IncentivizedLSP7 requirement.
+   * @param to The recipient address
+   * @param amount The amount being transferred
+   */
+  function _transfer(
+    address from,
+    address to,
+    uint256 amount,
+    bool force,
+    bytes memory data
+  ) internal {
+    revert(Errors.OPERATION_NOT_SUPPORTED);
+  }
+
+  /**
+   * @dev Implementation of the LSP7 standard which this contract overrides
+   */
+  function authorizeOperator(address operator, uint256 amount) external pure {
+    revert(Errors.OPERATION_NOT_SUPPORTED);
+  }
+
+  /**
+   * @dev Implementation of the LSP7 standard which this contract overrides
+   */
+  function revokeOperator(address operator) external pure {
+    revert(Errors.OPERATION_NOT_SUPPORTED);
+  }
+
+  /**
+   * @dev Implementation of the EIP-2612 permit function
+   * @return True if the operation was successful
+   */
+  function permit(
+    address owner,
+    address spender,
+    uint256 value,
+    uint256 deadline,
+    uint8 v,
+    bytes32 r,
+    bytes32 s
+  ) external returns (bool) {
+    revert(Errors.OPERATION_NOT_SUPPORTED);
+  }
+
+  /**
+   * @dev Implementation of the EIP-2612 functions
+   */
+  function nonces(address owner) public view virtual override returns (uint256) {
+    return _nonces[owner];
+  }
+
+  /**
+   * @dev Domain separator, for EIP-712 signatures
+   */
+  function DOMAIN_SEPARATOR() public view override returns (bytes32) {
+    return _domainSeparator;
   }
 }

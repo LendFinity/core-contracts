@@ -12,6 +12,8 @@ import {IVariableDebtToken} from '../interfaces/IVariableDebtToken.sol';
 import {IPool} from '../interfaces/IPool.sol';
 import {IPoolDataProvider} from '../interfaces/IPoolDataProvider.sol';
 
+import '@lukso/lsp7-contracts/contracts/LSP7DigitalAsset.sol';
+
 /**
  * @title AaveProtocolDataProvider
  * @author Aave
@@ -24,6 +26,8 @@ contract AaveProtocolDataProvider is IPoolDataProvider {
 
   address constant MKR = 0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2;
   address constant ETH = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+
+  bytes32 constant LSP4_TOKEN_SYMBOL_KEY = keccak256('LSP4TokenSymbol');
 
   /// @inheritdoc IPoolDataProvider
   IPoolAddressesProvider public immutable ADDRESSES_PROVIDER;
@@ -51,7 +55,7 @@ contract AaveProtocolDataProvider is IPoolDataProvider {
         continue;
       }
       reservesTokens[i] = TokenData({
-        symbol: IERC20Detailed(reserves[i]).symbol(),
+        symbol: ERC725Y(reserves[i]).getData(LSP4_TOKEN_SYMBOL_KEY),
         tokenAddress: reserves[i]
       });
     }
@@ -66,7 +70,7 @@ contract AaveProtocolDataProvider is IPoolDataProvider {
     for (uint256 i = 0; i < reserves.length; i++) {
       DataTypes.ReserveData memory reserveData = pool.getReserveData(reserves[i]);
       aTokens[i] = TokenData({
-        symbol: IERC20Detailed(reserveData.aTokenAddress).symbol(),
+        symbol: ERC725Y(reserves[i]).getData(LSP4_TOKEN_SYMBOL_KEY),
         tokenAddress: reserveData.aTokenAddress
       });
     }

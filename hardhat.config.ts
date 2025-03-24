@@ -90,7 +90,7 @@ const hardhatConfig = {
   external: {
     contracts: [
       {
-        artifacts: './temp-artifacts',
+        artifacts: './artifacts',
         deploy: 'node_modules/@aave/deploy-v3/dist/deploy',
       },
     ],
